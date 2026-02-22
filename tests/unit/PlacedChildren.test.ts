@@ -150,6 +150,56 @@ describe("PlacedChildren", () => {
     });
   });
 
+  describe("getLastRowFirstChildIndexCalled", () => {
+    test("should return -1 if children empty", () => {
+      const placedChildren = new PlacedChildren();
+      // @ts-expect-error getLastRowFirstChildIndex test
+      expect(placedChildren.getLastRowFirstChildIndex(0)).toEqual(-1);
+    });
+
+    test("should return -1 if row doesn't exist", () => {
+      const placedChildren = new PlacedChildren(
+        getThreeRowsBoxesPlacedChildren(),
+      );
+      // @ts-expect-error getLastRowFirstChildIndex test
+      expect(placedChildren.getLastRowFirstChildIndex(3)).toEqual(-1);
+    });
+
+    test("should return correct first child index for each row", () => {
+      const children = getThreeRowsBoxesPlacedChildren();
+      const placedChildren = new PlacedChildren(children);
+      // @ts-expect-error getLastRowFirstChildIndex test
+      expect(placedChildren.getLastRowFirstChildIndex(0)).toEqual(6);
+      // @ts-expect-error getLastRowFirstChildIndex test
+      expect(placedChildren.getLastRowFirstChildIndex(1)).toEqual(3);
+      // @ts-expect-error getLastRowFirstChildIndex test
+      expect(placedChildren.getLastRowFirstChildIndex(2)).toEqual(0);
+    });
+
+    test("should work with single row", () => {
+      const placedChildren = new PlacedChildren([
+        { top: 0, left: 0, width: 10, height: 10, remainingRowWidth: 90 },
+        { top: 0, left: 11, width: 10, height: 10, remainingRowWidth: 79 },
+      ]);
+      // @ts-expect-error getLastRowFirstChildIndex test
+      expect(placedChildren.getLastRowFirstChildIndex(0)).toEqual(0);
+    });
+
+    test("should work with partial filled rows", () => {
+      const placedChildren = new PlacedChildren([
+        { top: 0, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
+        { top: 0, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
+        { top: 0, left: 20, width: 10, height: 10, remainingRowWidth: 0 },
+        { top: 10, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
+        { top: 10, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
+      ]);
+      // @ts-expect-error getLastRowFirstChildIndex test
+      expect(placedChildren.getLastRowFirstChildIndex(0)).toEqual(3);
+      // @ts-expect-error getLastRowFirstChildIndex test
+      expect(placedChildren.getLastRowFirstChildIndex(1)).toEqual(0);
+    });
+  });
+
   describe("getClosestTopChildrenByRange", () => {
     test("should return empty array if children empty", () => {
       const placedChildren = new PlacedChildren();

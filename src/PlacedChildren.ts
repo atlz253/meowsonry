@@ -65,12 +65,6 @@ export class PlacedChildren {
     return startIndex === -1 ? [] : this.getRowChildrenByStartIndex(startIndex);
   }
 
-  private getLastRow(index: number) {
-    // TODO: start searching from array end
-    const startIndex = this.getRowFirstChildIndex(this.rowsCount - 1 - index);
-    return startIndex === -1 ? [] : this.getRowChildrenByStartIndex(startIndex);
-  }
-
   private getRowFirstChildIndex(rowIndex: number) {
     if (this.#placed.length === 0) return -1;
     let rowStartIndex = 0;
@@ -88,6 +82,31 @@ export class PlacedChildren {
       prevRemainingWidth = remainingRowWidth;
     }
     return currentRowIndex === rowIndex ? rowStartIndex : -1;
+  }
+
+  private getLastRow(index: number) {
+    if (this.#placed.length === 0) return [];
+    const firstChildIndex = this.getLastRowFirstChildIndex(index);
+    return firstChildIndex === -1
+      ? []
+      : this.getRowChildrenByStartIndex(firstChildIndex);
+  }
+
+  private getLastRowFirstChildIndex(index: number) {
+    let currentRowIndex = 0;
+    for (let i = this.#placed.length - 1; i >= 0; i--) {
+      const { remainingRowWidth } = this.#placed[i];
+      const prevRemainingWidth =
+        i > 0 ? this.#placed[i - 1].remainingRowWidth : -1;
+
+      if (remainingRowWidth > prevRemainingWidth) {
+        if (currentRowIndex === index) {
+          return i;
+        }
+        currentRowIndex++;
+      }
+    }
+    return -1;
   }
 
   private getRowChildrenByStartIndex(startIndex: number) {
