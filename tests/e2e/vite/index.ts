@@ -6,6 +6,11 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-const container = document.querySelector(".test") as HTMLElement;
+const params = new URLSearchParams(window.location.search);
+const testId = params.get("test");
+const container = document.querySelector(`#${testId}`) as HTMLElement | null;
 
-meowsonry({ container });
+if (container) {
+  container.style.display = "block";
+  meowsonry({ container });
+}

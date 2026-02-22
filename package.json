@@ -1,11 +1,12 @@
 {
-  "name": "meowsonry",
+  "name": "meowsonry-layout",
   "description": "Masonry layout package",
   "version": "0.0.0",
   "license": "MIT",
   "author": "Fedor Alekseev",
   "type": "module",
   "scripts": {
+    "test": "vitest",
     "test.playwright": "playwright test",
     "test.playwright.ui": "playwright test --ui",
     "test.playwright.update": "playwright test --update-snapshots",
@@ -19,6 +20,7 @@
     "@types/alpinejs": "^3.13.11",
     "@types/node": "^25.2.3",
     "alpinejs": "^3.15.8",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vitest": "^4.0.18"
   }
 }
