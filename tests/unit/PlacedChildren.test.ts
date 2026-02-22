@@ -7,8 +7,8 @@ describe("PlacedChildren", () => {
   test("push should work", () => {
     const placedChildren = new PlacedChildren();
     const testItems: PlacedChild[] = [
-      { top: 0, left: 0, width: 10, height: 10, remainingRawWidth: 90 },
-      { top: 0, left: 11, width: 10, height: 10, remainingRawWidth: 79 },
+      { top: 0, left: 0, width: 10, height: 10, remainingRowWidth: 90 },
+      { top: 0, left: 11, width: 10, height: 10, remainingRowWidth: 79 },
     ];
 
     placedChildren.push(...testItems);
@@ -18,8 +18,8 @@ describe("PlacedChildren", () => {
 
   test("at should work", () => {
     const placedChildren = new PlacedChildren([
-      { top: 0, left: 0, width: 10, height: 10, remainingRawWidth: 90 },
-      { top: 0, left: 11, width: 10, height: 10, remainingRawWidth: 79 },
+      { top: 0, left: 0, width: 10, height: 10, remainingRowWidth: 90 },
+      { top: 0, left: 11, width: 10, height: 10, remainingRowWidth: 79 },
     ]);
 
     expect(placedChildren.at(0)).toEqual({
@@ -27,14 +27,14 @@ describe("PlacedChildren", () => {
       left: 0,
       width: 10,
       height: 10,
-      remainingRawWidth: 90,
+      remainingRowWidth: 90,
     });
     expect(placedChildren.at(-1)).toEqual({
       top: 0,
       left: 11,
       width: 10,
       height: 10,
-      remainingRawWidth: 79,
+      remainingRowWidth: 79,
     });
   });
 
@@ -47,8 +47,8 @@ describe("PlacedChildren", () => {
 
     test("should return same array for 0 and -1 indexes if only one row", () => {
       const placedChildrenObjects = [
-        { top: 0, left: 0, width: 10, height: 10, remainingRawWidth: 90 },
-        { top: 0, left: 11, width: 10, height: 10, remainingRawWidth: 79 },
+        { top: 0, left: 0, width: 10, height: 10, remainingRowWidth: 90 },
+        { top: 0, left: 11, width: 10, height: 10, remainingRowWidth: 79 },
       ];
       const placedChildren = new PlacedChildren(placedChildrenObjects);
       expect(placedChildren.rowAt(0)).toEqual(placedChildrenObjects);
@@ -158,8 +158,8 @@ describe("PlacedChildren", () => {
 
     test("should return empty array if top children in range doesn't exist", () => {
       const placedChildren = new PlacedChildren([
-        { top: 0, left: 0, width: 10, height: 10, remainingRawWidth: 20 },
-        { top: 0, left: 10, width: 10, height: 10, remainingRawWidth: 10 },
+        { top: 0, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
+        { top: 0, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
       ]);
       expect(placedChildren.getClosestTopChildrenByRange(21, 30)).toEqual([]);
     });
@@ -180,30 +180,30 @@ describe("PlacedChildren", () => {
 
     test("should work with partial filled rows", () => {
       const placedChildren = new PlacedChildren([
-        { top: 0, left: 0, width: 10, height: 10, remainingRawWidth: 20 },
-        { top: 0, left: 10, width: 10, height: 10, remainingRawWidth: 10 },
-        { top: 0, left: 20, width: 10, height: 10, remainingRawWidth: 0 },
-        { top: 10, left: 0, width: 10, height: 10, remainingRawWidth: 20 },
-        { top: 10, left: 10, width: 10, height: 10, remainingRawWidth: 10 },
+        { top: 0, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
+        { top: 0, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
+        { top: 0, left: 20, width: 10, height: 10, remainingRowWidth: 0 },
+        { top: 10, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
+        { top: 10, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
       ]);
       expect(placedChildren.getClosestTopChildrenByRange(0, 5)).toEqual([
-        { top: 10, left: 0, width: 10, height: 10, remainingRawWidth: 20 },
+        { top: 10, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
       ]);
       expect(placedChildren.getClosestTopChildrenByRange(0, 10)).toEqual([
-        { top: 10, left: 0, width: 10, height: 10, remainingRawWidth: 20 },
-        { top: 10, left: 10, width: 10, height: 10, remainingRawWidth: 10 },
+        { top: 10, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
+        { top: 10, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
       ]);
       expect(placedChildren.getClosestTopChildrenByRange(0, 20)).toEqual([
-        { top: 10, left: 0, width: 10, height: 10, remainingRawWidth: 20 },
-        { top: 10, left: 10, width: 10, height: 10, remainingRawWidth: 10 },
-        { top: 0, left: 20, width: 10, height: 10, remainingRawWidth: 0 },
+        { top: 10, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
+        { top: 10, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
+        { top: 0, left: 20, width: 10, height: 10, remainingRowWidth: 0 },
       ]);
       expect(placedChildren.getClosestTopChildrenByRange(21, 25)).toEqual([
-        { top: 0, left: 20, width: 10, height: 10, remainingRawWidth: 0 },
+        { top: 0, left: 20, width: 10, height: 10, remainingRowWidth: 0 },
       ]);
       expect(placedChildren.getClosestTopChildrenByRange(20, 30)).toEqual([
-        { top: 10, left: 10, width: 10, height: 10, remainingRawWidth: 10 },
-        { top: 0, left: 20, width: 10, height: 10, remainingRawWidth: 0 },
+        { top: 10, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
+        { top: 0, left: 20, width: 10, height: 10, remainingRowWidth: 0 },
       ]);
     });
   });

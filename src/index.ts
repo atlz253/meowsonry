@@ -12,7 +12,7 @@ export function meowsonry({ container }: { container: HTMLElement }) {
     c.style.position = "absolute";
     const prev = placed.at(-1);
     const left =
-      prev === undefined || prev.remainingRawWidth < c.clientWidth
+      prev === undefined || prev.remainingRowWidth < c.clientWidth
         ? 0
         : prev.left + prev.width;
 
@@ -34,9 +34,9 @@ export function meowsonry({ container }: { container: HTMLElement }) {
       left: left,
       width: c.clientWidth,
       height: c.clientHeight,
-      remainingRawWidth:
-        prev && prev.remainingRawWidth >= c.clientWidth
-          ? prev.remainingRawWidth - c.clientWidth
+      remainingRowWidth:
+        prev && prev.remainingRowWidth >= c.clientWidth
+          ? prev.remainingRowWidth - c.clientWidth
           : containerWidth - c.clientWidth,
     });
   });

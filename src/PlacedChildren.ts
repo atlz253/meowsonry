@@ -15,13 +15,13 @@ export class PlacedChildren {
   private get rowsCount() {
     if (this.#placed.length === 0) return 0;
     let count = 1;
-    let prevRemainingWidth = this.#placed[0].remainingRawWidth;
+    let prevRemainingWidth = this.#placed[0].remainingRowWidth;
     for (let i = 1; i < this.#placed.length; i++) {
-      const { remainingRawWidth } = this.#placed[i];
-      if (remainingRawWidth > prevRemainingWidth) {
+      const { remainingRowWidth } = this.#placed[i];
+      if (remainingRowWidth > prevRemainingWidth) {
         count++;
       }
-      prevRemainingWidth = remainingRawWidth;
+      prevRemainingWidth = remainingRowWidth;
     }
     return count;
   }
@@ -76,16 +76,16 @@ export class PlacedChildren {
     let rowStartIndex = 0;
     let currentRowIndex = 0;
     for (
-      let i = 1, prevRemainingWidth = this.#placed[0].remainingRawWidth;
+      let i = 1, prevRemainingWidth = this.#placed[0].remainingRowWidth;
       i < this.#placed.length && currentRowIndex !== rowIndex;
       i++
     ) {
-      const { remainingRawWidth } = this.#placed[i];
-      if (remainingRawWidth > prevRemainingWidth) {
+      const { remainingRowWidth } = this.#placed[i];
+      if (remainingRowWidth > prevRemainingWidth) {
         currentRowIndex++;
         rowStartIndex = i;
       }
-      prevRemainingWidth = remainingRawWidth;
+      prevRemainingWidth = remainingRowWidth;
     }
     return currentRowIndex === rowIndex ? rowStartIndex : -1;
   }
@@ -98,11 +98,11 @@ export class PlacedChildren {
       i++
     ) {
       const children = this.#placed[i];
-      if (children.remainingRawWidth > prevRemainingWidth) {
+      if (children.remainingRowWidth > prevRemainingWidth) {
         break;
       } else {
         result.push(children);
-        prevRemainingWidth = children.remainingRawWidth;
+        prevRemainingWidth = children.remainingRowWidth;
       }
     }
     return result;

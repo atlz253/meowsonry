@@ -3,6 +3,5 @@ export interface PlacedChild {
   left: number;
   width: number;
   height: number;
-  // FIXME: remainingRowWidth
-  remainingRawWidth: number;
+  remainingRowWidth: number;
 }
