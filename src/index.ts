@@ -1,45 +1,89 @@
+import { Middleware } from "./middleware";
+import { absolutePositioningProperties } from "./middleware/absolutePositioningProperties";
+import { baseRowPlacement } from "./middleware/baseRowPlacement";
+import { MIDDLEWARE_TYPE } from "./middleware/constants";
+import { containerClientWidth } from "./middleware/containerClientWidth";
+import { handleMiddleware } from "./middleware/handleMiddleware";
+import { setPositionProperty } from "./middleware/position";
+import { endCurrentChildPlacement } from "./middleware/endCurrentChildPlacement";
 import { PlacedChildren } from "./PlacedChildren";
 
-export function meowsonry({ container }: { container: HTMLElement }) {
-  const children = Array.from(container.children).filter(
+export function meowsonry({
+  container,
+  middleware = [],
+}: {
+  container: HTMLElement;
+  middleware?: Middleware[];
+}) {
+  const { containerWidth = 0 } = handleMiddleware({
+    initialContext: { container },
+    middleware: [
+      setPositionProperty({
+        value: "relative",
+        apply: ({ value, container }) => {
+          if (!container) throw new Error("container missing");
+          container.style.position = value;
+        },
+      }),
+      containerClientWidth({
+        apply: ({ clientWidth, setContext }) => {
+          setContext((prev) => ({
+            ...prev,
+            containerWidth: clientWidth,
+          }));
+        },
+      }),
+      ...middleware.filter(
+        (m) =>
+          m.type === MIDDLEWARE_TYPE.beforePlacement ||
+          m.type === MIDDLEWARE_TYPE.common,
+      ),
+    ],
+  });
+  const childrenElements = Array.from(container.children).filter(
     (c) => c instanceof HTMLElement,
   );
-  container.style.position = "relative";
-  const containerWidth = container.clientWidth;
-  const placed = new PlacedChildren();
-
-  children.forEach((c) => {
-    c.style.position = "absolute";
-    const prev = placed.at(-1);
-    const left =
-      prev === undefined || prev.remainingRowWidth < c.clientWidth
-        ? 0
-        : prev.left + prev.width;
-
-    const closestTopChildren = placed.getClosestTopChildrenByRange(
-      left,
-      left + c.clientWidth,
-    );
-    const closestTopChildrenWithoutPrev =
-      prev && prev === closestTopChildren[0]
-        ? closestTopChildren.slice(1)
-        : closestTopChildren;
-    let top = Math.max(
-      0,
-      ...closestTopChildrenWithoutPrev.map((c) => c.top + c.height),
-    );
-    Object.assign(c.style, { top: `${top}px`, left: `${left}px` });
-    placed.push({
-      top: top,
-      left: left,
-      width: c.clientWidth,
-      height: c.clientHeight,
-      remainingRowWidth:
-        prev && prev.remainingRowWidth >= c.clientWidth
-          ? prev.remainingRowWidth - c.clientWidth
-          : containerWidth - c.clientWidth,
-    });
-  });
+  const placedChildren = new PlacedChildren();
+  const placementMiddleware = [
+    setPositionProperty({
+      value: "absolute",
+      apply: ({ value, currentChildElement }) => {
+        if (!currentChildElement)
+          throw new Error("currentChildElement missing");
+        currentChildElement.style.position = value;
+      },
+    }),
+    baseRowPlacement(),
+    ...middleware.filter(
+      (m) =>
+        m.type === MIDDLEWARE_TYPE.placement ||
+        m.type === MIDDLEWARE_TYPE.common,
+    ),
+    absolutePositioningProperties({
+      apply({
+        absolutePositioningProperties: { top, left },
+        currentChildElement,
+      }) {
+        Object.assign(currentChildElement.style, {
+          top: `${top}px`,
+          left: `${left}px`,
+        });
+      },
+    }),
+    endCurrentChildPlacement(),
+  ];
+  childrenElements.forEach((currentChildElement) =>
+    handleMiddleware({
+      initialContext: {
+        container,
+        containerWidth,
+        placedChildren,
+        childrenElements,
+        currentChildElement,
+      },
+      middleware: placementMiddleware,
+    }),
+  );
 }
 
 export default meowsonry;
