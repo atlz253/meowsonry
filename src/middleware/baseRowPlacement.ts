@@ -23,7 +23,7 @@ export const baseRowPlacement = (): PlacementMiddleware => ({
       prevChild.remainingRowWidth >= currentChildElement.clientWidth
         ? closestTopChildren.slice(1)
         : closestTopChildren;
-    let top = Math.max(
+    const top = Math.max(
       0,
       ...closestTopChildrenWithoutSameRowPrev.map((c) => c.top + c.height),
     );

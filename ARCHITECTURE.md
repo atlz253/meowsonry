@@ -9,13 +9,16 @@ Meowsonry uses a **middleware pipeline architecture** to implement its masonry l
 ## Architecture Layers
 
 ### 1. Core Engine (src/index.ts)
+
 The main entry point orchestrates two distinct middleware phases:
+
 - **beforePlacement**: Initializes container context (executed once)
 - **placement**: Processes each child element (executed for each child)
 
 ### 2. Middleware Pipeline (src/middleware/)
 
 See [MIDDLEWARE.md](docs/MIDDLEWARE.md) for detailed technical documentation including:
+
 - Middleware type system and phases
 - Context management
 - Available middleware implementations
@@ -28,15 +31,16 @@ See [MIDDLEWARE.md](docs/MIDDLEWARE.md) for detailed technical documentation inc
 
 ## Middleware Types
 
-| Type | When | Context |
-|------|------|---------|
+| Type            | When                 | Context         |
+| --------------- | -------------------- | --------------- |
 | beforePlacement | Once before children | Container-level |
-| placement | For each child | Child-specific |
-| common | In both phases | Shared |
+| placement       | For each child       | Child-specific  |
+| common          | In both phases       | Shared          |
 
 ## Extension Points
 
 Developers can inject custom middleware to:
+
 - Modify layout algorithm
 - Add debugging/profiling hooks
 - Implement special positioning rules

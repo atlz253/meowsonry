@@ -8,16 +8,20 @@ npm run test.playwright     # Run e2e tests with Playwright
 npm run test.playwright.ui  # Run e2e tests in UI mode
 npm run test.playwright.update  # Update screenshot snapshots
 npm run test.server         # Start Vite dev server for e2e tests
-npm run typecheck           # Verify no type errors (run after task completion)
+npm run typecheck           # Verify no type errors
+npm run lint                # Verify no ESLint errors (run after task completion)
+npm run lint.fix            # Auto-fix ESLint errors
 ```
 
 Run a single unit test:
+
 ```bash
 npm test -- PlacedChildren.test.ts
 npm test -- -t "push should work"
 ```
 
 Run a single e2e test:
+
 ```bash
 npx playwright test index.spec.ts --project=chromium
 ```
@@ -25,6 +29,7 @@ npx playwright test index.spec.ts --project=chromium
 ## Code Style
 
 ### TypeScript
+
 - Use `.ts` extension for source files
 - Export types from `src/types.ts`
 - Use readonly arrays with private fields (`#placed: PlacedChild[] = []`) for encapsulation
@@ -33,6 +38,7 @@ npx playwright test index.spec.ts --project=chromium
 - Enable strict mode: `exactOptionalPropertyTypes`, `strict`, `isolatedModules`
 
 ### Testing
+
 - Unit tests in `tests/unit/`, e2e tests in `tests/e2e/`
 - Use Vitest for unit tests: `import { describe, expect, test } from "vitest"`
 - Use Playwright for e2e screenshot testing: `import { test, expect } from "@playwright/test"`
@@ -41,43 +47,64 @@ npx playwright test index.spec.ts --project=chromium
 - For row-based mocks, use remainingRowWidth to indicate row boundaries (reset to higher value at row start)
 
 ### Naming Conventions
+
 - Classes: PascalCase (`PlacedChildren`, `NumericRange`)
 - Functions: camelCase (`meowsonry`, `getClosestTopChildrenByRange`)
 - Private members: prefixed with `#` (private fields)
 - Test descriptions: use lowercase with spaces, describe expected behavior
 
 ### Error Handling
+
 - Throw descriptive errors for invalid arguments
 - Return empty arrays `[]` for edge cases instead of undefined
 - Use TypeScript's `at()` method for safe array access
 
 ### Imports & Exports
+
 - Default export: `export default meowsonry`
 - Named exports: use for utility classes and types (PlacedChildren, NumericRange)
 - Relative imports within source: `import { PlacedChild } from "./types"`
 - Use `satisfies` operator for type-checked arrays: `as satisfies PlacedChild[]`
 
 ### Formatting
+
 - 2-space indentation
 - Semicolon required at end of statements
 - Single quotes for strings
 - No trailing commas in object literals
 - Align properties vertically where it improves readability
 
+## Linting Rules
+
+The project uses ESLint with TypeScript support and Prettier integration:
+
+- **Auto-fixable errors**: Run `npm run lint.fix` to automatically fix formatting issues
+- **Manual fixes required**: Some ESLint errors may need manual correction (e.g., code logic issues)
+- **Always verify after changes**: Run `npm run lint` after completing tasks to ensure no new errors were introduced
+
+**Note:** The flat config (`eslint.config.ts`) includes:
+
+- `@eslint/js/recommended`
+- `typescript-eslint/recommended`
+- `eslint-plugin-prettier/recommended`
+
 ## Architecture
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for overview of middleware-based architecture.
 
 ### Middleware System
+
 - **beforePlacement**: Runs once before processing children (container initialization)
 - **placement**: Runs for each child element (layout calculation)
 - **common**: Runs in both phases (shared logic)
 
 Context types:
+
 - `BeforePlacementMiddlewareContext`: container, containerWidth?
 - `PlacementMiddlewareContext`: container, containerWidth, placedChildren, childrenElements, currentChildElement, currentChild?
 
 ### Data Structures
+
 - **PlacedChildren**: Manages placed items with row-aware operations
   - Row detection: remainingRowWidth increases indicate new row
   - Key methods: push(), at(), rowAt(), getClosestTopChildrenByRange()
@@ -85,10 +112,12 @@ Context types:
 
 ## Important Post-Task Steps
 
-After completing any coding task, verify type correctness:
+After completing any coding task, verify linting:
+
 ```bash
-npm run typecheck
+npm run lint
 ```
 
-This is mandatory to ensure no type errors were introduced.
+If ESLint reports errors, fix them manually or use `npm run lint.fix` for auto-fixable issues.
 
+**Note:** The project uses flat ESLint config (`eslint.config.ts`) with TypeScript support and Prettier integration via `eslint-plugin-prettier`. Type-checking is enabled in `tsconfig.json` with strict mode.

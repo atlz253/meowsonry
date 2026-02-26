@@ -9,10 +9,7 @@ export const absolutePositioningProperties = ({
   }) => void;
 }): PlacementMiddleware => ({
   type: "placement",
-  callback: ({
-    context: { currentChild, currentChildElement },
-    setContext,
-  }) => {
+  callback: ({ context: { currentChild, currentChildElement } }) => {
     if (!currentChild) throw new Error("currentChild missing");
     const { top, left } = currentChild;
     apply({

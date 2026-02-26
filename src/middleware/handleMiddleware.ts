@@ -7,18 +7,14 @@ import {
   UnknownMiddleware,
 } from "./types";
 
-export function handleMiddleware(
-  options: {
-    middleware: Array<BeforePlacementMiddleware | CommonMiddleware>;
-    initialContext: BeforePlacementMiddlewareContext;
-  },
-): BeforePlacementMiddlewareContext;
-export function handleMiddleware(
-  options: {
-    middleware: Array<PlacementMiddleware | CommonMiddleware>;
-    initialContext: PlacementMiddlewareContext;
-  },
-): PlacementMiddlewareContext;
+export function handleMiddleware(options: {
+  middleware: Array<BeforePlacementMiddleware | CommonMiddleware>;
+  initialContext: BeforePlacementMiddlewareContext;
+}): BeforePlacementMiddlewareContext;
+export function handleMiddleware(options: {
+  middleware: Array<PlacementMiddleware | CommonMiddleware>;
+  initialContext: PlacementMiddlewareContext;
+}): PlacementMiddlewareContext;
 
 export function handleMiddleware({
   middleware,

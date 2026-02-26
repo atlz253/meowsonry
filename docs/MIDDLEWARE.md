@@ -7,22 +7,24 @@ Meowsonry uses a **middleware pipeline architecture** to implement its masonry l
 ## Pipeline Phases
 
 ### 1. beforePlacement Phase
+
 - Executed once before processing children
 - Context: container, containerWidth
 - Use cases: measurements, container setup
 
 ### 2. placement Phase
+
 - Executed for each child element
 - Context: container, containerWidth, placedChildren, currentChildElement, currentChild
 - Use cases: position calculations, DOM updates
 
 ## Middleware Types
 
-| Type | Execution | Context |
-|------|-----------|---------|
-| beforePlacement | Once | Container-level |
-| placement | Per child | Child-specific |
-| common | Both phases | Shared |
+| Type            | Execution   | Context         |
+| --------------- | ----------- | --------------- |
+| beforePlacement | Once        | Container-level |
+| placement       | Per child   | Child-specific  |
+| common          | Both phases | Shared          |
 
 ## Core Components
 

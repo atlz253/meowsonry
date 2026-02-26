@@ -56,7 +56,10 @@ describe("handleMiddleware", () => {
         {
           type: MIDDLEWARE_TYPE.beforePlacement,
           callback: ({ setContext }) => {
-            setContext((prev) => ({ ...prev, containerWidth: (prev.containerWidth ?? 0) + 50 }));
+            setContext((prev) => ({
+              ...prev,
+              containerWidth: (prev.containerWidth ?? 0) + 50,
+            }));
           },
         },
       ],
