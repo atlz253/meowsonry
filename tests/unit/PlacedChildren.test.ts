@@ -1,14 +1,28 @@
 import { describe, expect, test } from "vitest";
 import { PlacedChildren } from "../../src/PlacedChildren";
-import { PlacedChild } from "../../src/types";
+import { ComputedChildPlacement } from "../../src/types";
 import { getThreeRowsBoxesPlacedChildren } from "./mocks";
 
 describe("PlacedChildren", () => {
   test("push should work", () => {
     const placedChildren = new PlacedChildren();
-    const testItems: PlacedChild[] = [
-      { top: 0, left: 0, width: 10, height: 10, remainingRowWidth: 90 },
-      { top: 0, left: 11, width: 10, height: 10, remainingRowWidth: 79 },
+    const testItems: ComputedChildPlacement[] = [
+      {
+        top: 0,
+        left: 0,
+        width: 10,
+        height: 10,
+        remainingRowWidth: 90,
+        element: {} as HTMLElement,
+      },
+      {
+        top: 0,
+        left: 11,
+        width: 10,
+        height: 10,
+        remainingRowWidth: 79,
+        element: {} as HTMLElement,
+      },
     ];
 
     placedChildren.push(...testItems);
@@ -18,8 +32,22 @@ describe("PlacedChildren", () => {
 
   test("at should work", () => {
     const placedChildren = new PlacedChildren([
-      { top: 0, left: 0, width: 10, height: 10, remainingRowWidth: 90 },
-      { top: 0, left: 11, width: 10, height: 10, remainingRowWidth: 79 },
+      {
+        top: 0,
+        left: 0,
+        width: 10,
+        height: 10,
+        remainingRowWidth: 90,
+        element: {} as HTMLElement,
+      },
+      {
+        top: 0,
+        left: 11,
+        width: 10,
+        height: 10,
+        remainingRowWidth: 79,
+        element: {} as HTMLElement,
+      },
     ]);
 
     expect(placedChildren.at(0)).toEqual({
@@ -28,6 +56,7 @@ describe("PlacedChildren", () => {
       width: 10,
       height: 10,
       remainingRowWidth: 90,
+      element: {},
     });
     expect(placedChildren.at(-1)).toEqual({
       top: 0,
@@ -35,6 +64,7 @@ describe("PlacedChildren", () => {
       width: 10,
       height: 10,
       remainingRowWidth: 79,
+      element: {},
     });
   });
 
@@ -47,8 +77,22 @@ describe("PlacedChildren", () => {
 
     test("should return same array for 0 and -1 indexes if only one row", () => {
       const placedChildrenObjects = [
-        { top: 0, left: 0, width: 10, height: 10, remainingRowWidth: 90 },
-        { top: 0, left: 11, width: 10, height: 10, remainingRowWidth: 79 },
+        {
+          top: 0,
+          left: 0,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 90,
+          element: {} as HTMLElement,
+        },
+        {
+          top: 0,
+          left: 11,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 79,
+          element: {} as HTMLElement,
+        },
       ];
       const placedChildren = new PlacedChildren(placedChildrenObjects);
       expect(placedChildren.rowAt(0)).toEqual(placedChildrenObjects);
@@ -178,8 +222,22 @@ describe("PlacedChildren", () => {
 
     test("should work with single row", () => {
       const placedChildren = new PlacedChildren([
-        { top: 0, left: 0, width: 10, height: 10, remainingRowWidth: 90 },
-        { top: 0, left: 11, width: 10, height: 10, remainingRowWidth: 79 },
+        {
+          top: 0,
+          left: 0,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 90,
+          element: {} as HTMLElement,
+        },
+        {
+          top: 0,
+          left: 11,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 79,
+          element: {} as HTMLElement,
+        },
       ]);
       // @ts-expect-error getLastRowFirstChildIndex test
       expect(placedChildren.getLastRowFirstChildIndex(0)).toEqual(0);
@@ -187,11 +245,46 @@ describe("PlacedChildren", () => {
 
     test("should work with partial filled rows", () => {
       const placedChildren = new PlacedChildren([
-        { top: 0, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
-        { top: 0, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
-        { top: 0, left: 20, width: 10, height: 10, remainingRowWidth: 0 },
-        { top: 10, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
-        { top: 10, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
+        {
+          top: 0,
+          left: 0,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 20,
+          element: {} as HTMLElement,
+        },
+        {
+          top: 0,
+          left: 10,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 10,
+          element: {} as HTMLElement,
+        },
+        {
+          top: 0,
+          left: 20,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 0,
+          element: {} as HTMLElement,
+        },
+        {
+          top: 10,
+          left: 0,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 20,
+          element: {} as HTMLElement,
+        },
+        {
+          top: 10,
+          left: 10,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 10,
+          element: {} as HTMLElement,
+        },
       ]);
       // @ts-expect-error getLastRowFirstChildIndex test
       expect(placedChildren.getLastRowFirstChildIndex(0)).toEqual(3);
@@ -208,8 +301,22 @@ describe("PlacedChildren", () => {
 
     test("should return empty array if top children in range doesn't exist", () => {
       const placedChildren = new PlacedChildren([
-        { top: 0, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
-        { top: 0, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
+        {
+          top: 0,
+          left: 0,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 20,
+          element: {} as HTMLElement,
+        },
+        {
+          top: 0,
+          left: 10,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 10,
+          element: {} as HTMLElement,
+        },
       ]);
       expect(placedChildren.getClosestTopChildrenByRange(21, 30)).toEqual([]);
     });
@@ -230,30 +337,128 @@ describe("PlacedChildren", () => {
 
     test("should work with partial filled rows", () => {
       const placedChildren = new PlacedChildren([
-        { top: 0, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
-        { top: 0, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
-        { top: 0, left: 20, width: 10, height: 10, remainingRowWidth: 0 },
-        { top: 10, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
-        { top: 10, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
+        {
+          top: 0,
+          left: 0,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 20,
+          element: {} as HTMLElement,
+        },
+        {
+          top: 0,
+          left: 10,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 10,
+          element: {} as HTMLElement,
+        },
+        {
+          top: 0,
+          left: 20,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 0,
+          element: {} as HTMLElement,
+        },
+        {
+          top: 10,
+          left: 0,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 20,
+          element: {} as HTMLElement,
+        },
+        {
+          top: 10,
+          left: 10,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 10,
+          element: {} as HTMLElement,
+        },
       ]);
       expect(placedChildren.getClosestTopChildrenByRange(0, 5)).toEqual([
-        { top: 10, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
+        {
+          top: 10,
+          left: 0,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 20,
+          element: {},
+        },
       ]);
       expect(placedChildren.getClosestTopChildrenByRange(0, 10)).toEqual([
-        { top: 10, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
-        { top: 10, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
+        {
+          top: 10,
+          left: 0,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 20,
+          element: {},
+        },
+        {
+          top: 10,
+          left: 10,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 10,
+          element: {},
+        },
       ]);
       expect(placedChildren.getClosestTopChildrenByRange(0, 20)).toEqual([
-        { top: 10, left: 0, width: 10, height: 10, remainingRowWidth: 20 },
-        { top: 10, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
-        { top: 0, left: 20, width: 10, height: 10, remainingRowWidth: 0 },
+        {
+          top: 10,
+          left: 0,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 20,
+          element: {},
+        },
+        {
+          top: 10,
+          left: 10,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 10,
+          element: {},
+        },
+        {
+          top: 0,
+          left: 20,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 0,
+          element: {},
+        },
       ]);
       expect(placedChildren.getClosestTopChildrenByRange(21, 25)).toEqual([
-        { top: 0, left: 20, width: 10, height: 10, remainingRowWidth: 0 },
+        {
+          top: 0,
+          left: 20,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 0,
+          element: {},
+        },
       ]);
       expect(placedChildren.getClosestTopChildrenByRange(20, 30)).toEqual([
-        { top: 10, left: 10, width: 10, height: 10, remainingRowWidth: 10 },
-        { top: 0, left: 20, width: 10, height: 10, remainingRowWidth: 0 },
+        {
+          top: 10,
+          left: 10,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 10,
+          element: {},
+        },
+        {
+          top: 0,
+          left: 20,
+          width: 10,
+          height: 10,
+          remainingRowWidth: 0,
+          element: {},
+        },
       ]);
     });
   });

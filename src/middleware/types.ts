@@ -1,5 +1,5 @@
 import { PlacedChildren } from "../PlacedChildren";
-import { PlacedChild } from "../types";
+import { ComputedChildPlacement } from "../types";
 import { MIDDLEWARE_TYPE } from "./constants";
 
 export type SetContextCallback<T extends object> = (
@@ -17,6 +17,7 @@ export type UnknownMiddleware = {
 };
 
 export type BeforePlacementMiddlewareContext = {
+  gap?: number;
   container: HTMLElement;
   containerWidth?: number;
 };
@@ -27,12 +28,13 @@ export type BeforePlacementMiddleware = {
 };
 
 export type PlacementMiddlewareContext = {
+  gap: number;
   container: HTMLElement;
   containerWidth: number;
   placedChildren: PlacedChildren;
   childrenElements: HTMLElement[];
   currentChildElement: HTMLElement;
-  currentChild?: PlacedChild;
+  currentChild?: ComputedChildPlacement;
 };
 
 export type PlacementMiddleware = {

@@ -1,5 +1,4 @@
 import { Middleware } from "./middleware";
-import { absolutePositioningProperties } from "./middleware/absolutePositioningProperties";
 import { baseRowPlacement } from "./middleware/baseRowPlacement";
 import { MIDDLEWARE_TYPE } from "./middleware/constants";
 import { containerClientWidth } from "./middleware/containerClientWidth";
@@ -15,7 +14,7 @@ export function meowsonry({
   container: HTMLElement;
   middleware?: Middleware[];
 }) {
-  const { containerWidth = 0 } = handleMiddleware({
+  const { containerWidth = 0, gap = 0 } = handleMiddleware({
     initialContext: { container },
     middleware: [
       setPositionProperty({
@@ -59,22 +58,12 @@ export function meowsonry({
         m.type === MIDDLEWARE_TYPE.placement ||
         m.type === MIDDLEWARE_TYPE.common,
     ),
-    absolutePositioningProperties({
-      apply({
-        absolutePositioningProperties: { top, left },
-        currentChildElement,
-      }) {
-        Object.assign(currentChildElement.style, {
-          top: `${top}px`,
-          left: `${left}px`,
-        });
-      },
-    }),
     endCurrentChildPlacement(),
   ];
   childrenElements.forEach((currentChildElement) =>
     handleMiddleware({
       initialContext: {
+        gap,
         container,
         containerWidth,
         placedChildren,
@@ -84,6 +73,10 @@ export function meowsonry({
       middleware: placementMiddleware,
     }),
   );
+  placedChildren.forEach(({ element, top, left }) =>
+    Object.assign(element.style, { top: `${top}px`, left: `${left}px` }),
+  );
+  // TODO: apply height to container
 }
 
 export default meowsonry;

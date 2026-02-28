@@ -3,7 +3,7 @@ import { PlacementMiddleware } from "./types";
 export const baseRowPlacement = (): PlacementMiddleware => ({
   type: "placement",
   callback: ({
-    context: { placedChildren, currentChildElement, containerWidth },
+    context: { placedChildren, currentChildElement, containerWidth, gap },
     setContext,
   }) => {
     const prevChild = placedChildren.at(-1);
@@ -11,8 +11,7 @@ export const baseRowPlacement = (): PlacementMiddleware => ({
       prevChild === undefined ||
       prevChild.remainingRowWidth < currentChildElement.clientWidth
         ? 0
-        : prevChild.left + prevChild.width;
-
+        : prevChild.left + prevChild.width + gap;
     const closestTopChildren = placedChildren.getClosestTopChildrenByRange(
       left,
       left + currentChildElement.clientWidth,
@@ -25,13 +24,16 @@ export const baseRowPlacement = (): PlacementMiddleware => ({
         : closestTopChildren;
     const top = Math.max(
       0,
-      ...closestTopChildrenWithoutSameRowPrev.map((c) => c.top + c.height),
+      ...closestTopChildrenWithoutSameRowPrev.map(
+        (c) => c.top + c.height + gap,
+      ),
     );
     setContext((prev) => ({
       ...prev,
       currentChild: {
         top: top,
         left: left,
+        element: currentChildElement,
         width: currentChildElement.clientWidth,
         height: currentChildElement.clientHeight,
         remainingRowWidth:

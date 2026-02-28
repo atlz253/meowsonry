@@ -8,7 +8,7 @@ npm run test.playwright     # Run e2e tests with Playwright
 npm run test.playwright.ui  # Run e2e tests in UI mode
 npm run test.playwright.update  # Update screenshot snapshots
 npm run test.server         # Start Vite dev server for e2e tests
-npm run typecheck           # Verify no type errors
+npm run typecheck           # Verify no type errors (run after task completion)
 npm run lint                # Verify no ESLint errors (run after task completion)
 npm run lint.fix            # Auto-fix ESLint errors
 ```
@@ -112,10 +112,11 @@ Context types:
 
 ## Important Post-Task Steps
 
-After completing any coding task, verify linting:
+After completing any coding task, verify linting and types:
 
 ```bash
 npm run lint
+npm run typecheck
 ```
 
 If ESLint reports errors, fix them manually or use `npm run lint.fix` for auto-fixable issues.

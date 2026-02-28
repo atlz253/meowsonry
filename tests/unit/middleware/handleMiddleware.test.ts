@@ -118,6 +118,7 @@ describe("handleMiddleware", () => {
     const currentChildElement = {} as HTMLElement;
 
     const initialContext: PlacementMiddlewareContext = {
+      gap: 0,
       container,
       containerWidth: 100,
       placedChildren: null as never,

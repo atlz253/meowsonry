@@ -1,10 +1,10 @@
-import { PlacedChild } from "./types";
+import { ComputedChildPlacement } from "./types";
 import { NumericRange } from "./Range";
 
 export class PlacedChildren {
-  readonly #placed: PlacedChild[] = [];
+  readonly #placed: ComputedChildPlacement[] = [];
 
-  constructor(placed?: PlacedChild[]) {
+  constructor(placed?: ComputedChildPlacement[]) {
     if (placed) this.#placed.push(...placed);
   }
 
@@ -26,12 +26,22 @@ export class PlacedChildren {
     return count;
   }
 
-  public push(...items: PlacedChild[]) {
+  public push(...items: ComputedChildPlacement[]) {
     return this.#placed.push(...items);
   }
 
   public at(index: number) {
     return this.#placed.at(index);
+  }
+
+  public forEach(
+    callbackfn: (
+      value: ComputedChildPlacement,
+      index: number,
+      array: ComputedChildPlacement[],
+    ) => void,
+  ) {
+    return this.#placed.forEach(callbackfn);
   }
 
   public getClosestTopChildrenByRange(x1: number, x2: number) {
@@ -110,7 +120,7 @@ export class PlacedChildren {
   }
 
   private getRowChildrenByStartIndex(startIndex: number) {
-    const result: PlacedChild[] = [];
+    const result: ComputedChildPlacement[] = [];
     for (
       let i = startIndex, prevRemainingWidth = Infinity;
       i < this.#placed.length;

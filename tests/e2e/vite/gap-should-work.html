@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="container" style="width: 320px">
+      <div style="width: 100px; height: 100px; background-color: red"></div>
+      <div style="width: 100px; height: 100px; background-color: green"></div>
+      <div style="width: 100px; height: 100px; background-color: blue"></div>
+      <div style="width: 100px; height: 100px; background-color: green"></div>
+      <div style="width: 100px; height: 100px; background-color: blue"></div>
+      <div style="width: 100px; height: 100px; background-color: red"></div>
+      <div style="width: 100px; height: 100px; background-color: red"></div>
+      <div style="width: 100px; height: 100px; background-color: green"></div>
+      <div style="width: 100px; height: 100px; background-color: blue"></div>
+    </div>
+    <script type="module">
+      import { meowsonry } from "../../../src";
+      import { gap } from "../../../src/middleware";
+
+      meowsonry({
+        container: document.querySelector(".container"),
+        middleware: [gap(8)],
+      });
+    </script>
+  </body>
+</html>

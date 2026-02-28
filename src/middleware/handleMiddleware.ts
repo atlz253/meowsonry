@@ -2,6 +2,7 @@ import {
   BeforePlacementMiddleware,
   BeforePlacementMiddlewareContext,
   CommonMiddleware,
+  Middleware,
   PlacementMiddleware,
   PlacementMiddlewareContext,
   UnknownMiddleware,
@@ -20,9 +21,7 @@ export function handleMiddleware({
   middleware,
   initialContext,
 }: {
-  middleware:
-    | Array<BeforePlacementMiddleware | CommonMiddleware>
-    | Array<PlacementMiddleware | CommonMiddleware>;
+  middleware: Array<Middleware>;
   initialContext: BeforePlacementMiddlewareContext | PlacementMiddlewareContext;
 }) {
   let currentContext = initialContext;
