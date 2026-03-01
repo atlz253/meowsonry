@@ -27,8 +27,10 @@ export class PlacedChildren {
   }
 
   public get height() {
+    const firstRow = this.rowAt(0);
+    const minTop = Math.min(...firstRow.map((c) => c.top));
     const lastRow = this.rowAt(-1);
-    return Math.max(...lastRow.map((c) => c.top + c.height));
+    return Math.max(...lastRow.map((c) => c.top + c.height - minTop));
   }
 
   public push(...items: ComputedChildPlacement[]) {

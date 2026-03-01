@@ -3,14 +3,19 @@ import { PlacementMiddleware } from "./types";
 export const baseRowPlacement = (): PlacementMiddleware => ({
   type: "placement",
   callback: ({
-    context: { placedChildren, currentChildElement, containerWidth, gap },
+    context: {
+      placedChildren,
+      currentChildElement,
+      container: { width, paddingLeft, paddingTop },
+      gap,
+    },
     setContext,
   }) => {
     const prevChild = placedChildren.at(-1);
     const left =
       prevChild === undefined ||
       prevChild.remainingRowWidth < currentChildElement.clientWidth
-        ? 0
+        ? paddingLeft
         : prevChild.left + prevChild.width + gap;
     const closestTopChildren = placedChildren.getClosestTopChildrenByRange(
       left,
@@ -23,7 +28,7 @@ export const baseRowPlacement = (): PlacementMiddleware => ({
         ? closestTopChildren.slice(1)
         : closestTopChildren;
     const top = Math.max(
-      0,
+      paddingTop,
       ...closestTopChildrenWithoutSameRowPrev.map(
         (c) => c.top + c.height + gap,
       ),
@@ -40,7 +45,7 @@ export const baseRowPlacement = (): PlacementMiddleware => ({
           prevChild &&
           prevChild.remainingRowWidth >= currentChildElement.clientWidth
             ? prevChild.remainingRowWidth - currentChildElement.clientWidth
-            : containerWidth - currentChildElement.clientWidth,
+            : width - currentChildElement.clientWidth,
       },
     }));
   },

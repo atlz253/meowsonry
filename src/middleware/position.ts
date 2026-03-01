@@ -15,6 +15,6 @@ export const setPositionProperty = ({
 }): CommonMiddleware => ({
   type: "common",
   callback: ({ context: { container, currentChildElement } }) => {
-    apply({ value, container, currentChildElement });
+    apply({ value, container: container?.element, currentChildElement });
   },
 });

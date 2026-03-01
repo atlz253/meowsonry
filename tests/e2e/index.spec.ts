@@ -14,3 +14,10 @@ test("container height should be correct", async ({ page }) => {
   await page.goto("http://localhost:3000/container-height-should-be-correct");
   await expect(page).toHaveScreenshot();
 });
+
+test("container padding should be considered", async ({ page }) => {
+  await page.goto(
+    "http://localhost:3000/container-padding-should-be-considered",
+  );
+  await expect(page).toHaveScreenshot();
+});

@@ -1,21 +1,21 @@
 import { Middleware } from "./middleware";
 import { baseRowPlacement } from "./middleware/baseRowPlacement";
 import { MIDDLEWARE_TYPE } from "./middleware/constants";
-import { containerClientWidth } from "./middleware/containerClientWidth";
+import { containerProperties } from "./middleware/containerProperties";
 import { handleMiddleware } from "./middleware/handleMiddleware";
 import { setPositionProperty } from "./middleware/position";
 import { endCurrentChildPlacement } from "./middleware/endCurrentChildPlacement";
 import { PlacedChildren } from "./PlacedChildren";
 
 export function meowsonry({
-  container,
+  container: containerElement,
   middleware = [],
 }: {
   container: HTMLElement;
   middleware?: Middleware[];
 }) {
-  const { containerWidth = 0, gap = 0 } = handleMiddleware({
-    initialContext: { container },
+  const { container, gap = 0 } = handleMiddleware({
+    initialContext: { container: { element: containerElement } },
     middleware: [
       setPositionProperty({
         value: "relative",
@@ -24,14 +24,7 @@ export function meowsonry({
           container.style.position = value;
         },
       }),
-      containerClientWidth({
-        apply: ({ clientWidth, setContext }) => {
-          setContext((prev) => ({
-            ...prev,
-            containerWidth: clientWidth,
-          }));
-        },
-      }),
+      containerProperties(),
       ...middleware.filter(
         (m) =>
           m.type === MIDDLEWARE_TYPE.beforePlacement ||
@@ -39,7 +32,7 @@ export function meowsonry({
       ),
     ],
   });
-  const childrenElements = Array.from(container.children).filter(
+  const childrenElements = Array.from(containerElement.children).filter(
     (c) => c instanceof HTMLElement,
   );
   const placedChildren = new PlacedChildren();
@@ -64,8 +57,12 @@ export function meowsonry({
     handleMiddleware({
       initialContext: {
         gap,
-        container,
-        containerWidth,
+        container: {
+          paddingLeft: 0,
+          paddingTop: 0,
+          width: 0,
+          ...container,
+        },
         placedChildren,
         childrenElements,
         currentChildElement,
@@ -76,7 +73,9 @@ export function meowsonry({
   placedChildren.forEach(({ element, top, left }) =>
     Object.assign(element.style, { top: `${top}px`, left: `${left}px` }),
   );
-  Object.assign(container.style, { height: `${placedChildren.height}px` });
+  Object.assign(containerElement.style, {
+    height: `${placedChildren.height}px`,
+  });
 }
 
 export default meowsonry;

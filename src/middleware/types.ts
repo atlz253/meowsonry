@@ -18,8 +18,12 @@ export type UnknownMiddleware = {
 
 export type BeforePlacementMiddlewareContext = {
   gap?: number;
-  container: HTMLElement;
-  containerWidth?: number;
+  container: {
+    element: HTMLElement;
+    width?: number;
+    paddingLeft?: number;
+    paddingTop?: number;
+  };
 };
 
 export type BeforePlacementMiddleware = {
@@ -29,8 +33,12 @@ export type BeforePlacementMiddleware = {
 
 export type PlacementMiddlewareContext = {
   gap: number;
-  container: HTMLElement;
-  containerWidth: number;
+  container: {
+    element: HTMLElement;
+    width: number;
+    paddingLeft: number;
+    paddingTop: number;
+  };
   placedChildren: PlacedChildren;
   childrenElements: HTMLElement[];
   currentChildElement: HTMLElement;
@@ -43,7 +51,12 @@ export type PlacementMiddleware = {
 };
 
 export type CommonMiddlewareContext = {
-  container?: HTMLElement;
+  container?: {
+    element: HTMLElement;
+    width?: number;
+    paddingLeft?: number;
+    paddingTop?: number;
+  };
   currentChildElement?: HTMLElement;
 };
 
