@@ -9,3 +9,8 @@ test("column positioning should work", async ({ page }) => {
   await page.goto("http://localhost:3000/column-positioning-should-work");
   await expect(page).toHaveScreenshot();
 });
+
+test("container height should be correct", async ({ page }) => {
+  await page.goto("http://localhost:3000/container-height-should-be-correct");
+  await expect(page).toHaveScreenshot();
+});

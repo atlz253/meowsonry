@@ -26,6 +26,11 @@ export class PlacedChildren {
     return count;
   }
 
+  public get height() {
+    const lastRow = this.rowAt(-1);
+    return Math.max(...lastRow.map((c) => c.top + c.height));
+  }
+
   public push(...items: ComputedChildPlacement[]) {
     return this.#placed.push(...items);
   }

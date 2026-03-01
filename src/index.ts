@@ -76,7 +76,7 @@ export function meowsonry({
   placedChildren.forEach(({ element, top, left }) =>
     Object.assign(element.style, { top: `${top}px`, left: `${left}px` }),
   );
-  // TODO: apply height to container
+  Object.assign(container.style, { height: `${placedChildren.height}px` });
 }
 
 export default meowsonry;
