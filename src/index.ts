@@ -7,6 +7,8 @@ import { setPositionProperty } from "./middleware/position";
 import { endCurrentChildPlacement } from "./middleware/endCurrentChildPlacement";
 import { PlacedChildren } from "./PlacedChildren";
 
+export { autoUpdate } from "./autoUpdate";
+
 export function meowsonry({
   container: containerElement,
   middleware = [],

@@ -16,8 +16,12 @@ describe("baseRowPlacement", () => {
     baseRowPlacement().callback({
       context: {
         gap: 0,
-        container: {} as HTMLElement,
-        containerWidth: 800,
+        container: {
+          element: {} as HTMLElement,
+          width: 800,
+          paddingTop: 0,
+          paddingLeft: 0,
+        },
         placedChildren,
         childrenElements: [],
         currentChildElement,
@@ -58,8 +62,12 @@ describe("baseRowPlacement", () => {
     baseRowPlacement().callback({
       context: {
         gap: 0,
-        container: {} as HTMLElement,
-        containerWidth: 800,
+        container: {
+          element: {} as HTMLElement,
+          width: 800,
+          paddingTop: 0,
+          paddingLeft: 0,
+        },
         placedChildren,
         childrenElements: [],
         currentChildElement,
@@ -100,8 +108,12 @@ describe("baseRowPlacement", () => {
     baseRowPlacement().callback({
       context: {
         gap: 0,
-        container: {} as HTMLElement,
-        containerWidth: 800,
+        container: {
+          element: {} as HTMLElement,
+          width: 800,
+          paddingTop: 0,
+          paddingLeft: 0,
+        },
         placedChildren,
         childrenElements: [],
         currentChildElement,
@@ -150,8 +162,12 @@ describe("baseRowPlacement", () => {
     baseRowPlacement().callback({
       context: {
         gap: 0,
-        container: {} as HTMLElement,
-        containerWidth: 800,
+        container: {
+          element: {} as HTMLElement,
+          width: 800,
+          paddingTop: 0,
+          paddingLeft: 0,
+        },
         placedChildren,
         childrenElements: [],
         currentChildElement,
@@ -193,8 +209,12 @@ describe("baseRowPlacement", () => {
     baseRowPlacement().callback({
       context: {
         gap: 0,
-        container: {} as HTMLElement,
-        containerWidth: 800,
+        container: {
+          element: {} as HTMLElement,
+          width: 800,
+          paddingTop: 0,
+          paddingLeft: 0,
+        },
         placedChildren,
         childrenElements: [],
         currentChildElement,
@@ -259,8 +279,12 @@ describe("baseRowPlacement", () => {
     baseRowPlacement().callback({
       context: {
         gap: 0,
-        container: {} as HTMLElement,
-        containerWidth: 800,
+        container: {
+          element: {} as HTMLElement,
+          width: 800,
+          paddingTop: 0,
+          paddingLeft: 0,
+        },
         placedChildren,
         childrenElements: [],
         currentChildElement,

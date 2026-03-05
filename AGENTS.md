@@ -28,13 +28,23 @@ npx playwright test index.spec.ts --project=chromium
 
 ## Code Style
 
+### Documentation
+
+All functions with non-trivial logic must be documented using JSDoc comments (`/** ... */`).
+
+See [CODESTYLE.md](CODESTYLE.md) for detailed documentation guidelines including:
+
+- JSDoc comment structure and rules
+- TypeScript conventions (strict mode, readonly declarations)
+- Naming conventions and formatting standards
+- Import/export patterns and error handling
+
 ### TypeScript
 
 - Use `.ts` extension for source files
 - Export types from `src/types.ts`
 - Use readonly arrays with private fields (`#placed: PlacedChild[] = []`) for encapsulation
 - Prefer `const` over `let`, use `readonly` where appropriate
-- Use numeric range class (`NumericRange`) for interval operations
 - Enable strict mode: `exactOptionalPropertyTypes`, `strict`, `isolatedModules`
 
 ### Testing
@@ -44,14 +54,15 @@ npx playwright test index.spec.ts --project=chromium
 - Use Playwright for e2e screenshot testing: `import { test, expect } from "@playwright/test"`
 - Mock test data in `tests/unit/mocks/` using `#placed` pattern
 - Snapshot directory: `./tests/e2e/snapshots`
-- For row-based mocks, use remainingRowWidth to indicate row boundaries (reset to higher value at row start)
 
 ### Naming Conventions
 
-- Classes: PascalCase (`PlacedChildren`, `NumericRange`)
-- Functions: camelCase (`meowsonry`, `getClosestTopChildrenByRange`)
-- Private members: prefixed with `#` (private fields)
-- Test descriptions: use lowercase with spaces, describe expected behavior
+| Entity            | Case                    | Example                                     |
+| ----------------- | ----------------------- | ------------------------------------------- |
+| Classes           | PascalCase              | `PlacedChildren`, `NumericRange`            |
+| Functions         | camelCase               | `meowsonry`, `getClosestTopChildrenByRange` |
+| - Private fields  | camelCase with # prefix | `#placed`, `#rowsCount`                     |
+| Test descriptions | lowercase with spaces   | "push should work"                          |
 
 ### Error Handling
 
