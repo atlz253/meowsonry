@@ -14,7 +14,7 @@ export const baseRowPlacement = (): PlacementMiddleware => ({
     const prevChild = placedChildren.at(-1);
     const left =
       prevChild === undefined ||
-      prevChild.remainingRowWidth < currentChildElement.clientWidth
+      prevChild.remainingRowWidth < currentChildElement.clientWidth + gap
         ? paddingLeft
         : prevChild.left + prevChild.width + gap;
     const closestTopChildren = placedChildren.getClosestTopChildrenByRange(
@@ -27,11 +27,21 @@ export const baseRowPlacement = (): PlacementMiddleware => ({
       prevChild.remainingRowWidth >= currentChildElement.clientWidth
         ? closestTopChildren.slice(1)
         : closestTopChildren;
-    const top = Math.max(
-      paddingTop,
-      ...closestTopChildrenWithoutSameRowPrev.map(
-        (c) => c.top + c.height + gap,
-      ),
+    const top =
+      closestTopChildrenWithoutSameRowPrev.length == 0 && prevChild
+        ? prevChild.top
+        : Math.max(
+            paddingTop,
+            ...closestTopChildrenWithoutSameRowPrev.map(
+              (c) => c.top + c.height + gap,
+            ),
+          );
+    const remainingRowWidth = Math.max(
+      0,
+      prevChild &&
+        prevChild.remainingRowWidth >= currentChildElement.clientWidth + gap
+        ? prevChild.remainingRowWidth - currentChildElement.clientWidth - gap
+        : width - currentChildElement.clientWidth,
     );
     setContext((prev) => ({
       ...prev,
@@ -41,11 +51,7 @@ export const baseRowPlacement = (): PlacementMiddleware => ({
         element: currentChildElement,
         width: currentChildElement.clientWidth,
         height: currentChildElement.clientHeight,
-        remainingRowWidth:
-          prevChild &&
-          prevChild.remainingRowWidth >= currentChildElement.clientWidth
-            ? prevChild.remainingRowWidth - currentChildElement.clientWidth
-            : width - currentChildElement.clientWidth,
+        remainingRowWidth: remainingRowWidth,
       },
     }));
   },

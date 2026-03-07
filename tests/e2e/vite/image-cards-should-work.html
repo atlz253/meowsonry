@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello, world!</title>
+    <style>
+      .card__image {
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container"></div>
+    <template id="cardTemplate">
+      <div class="card"><img src="" alt="demo card" class="card__image" /></div>
+    </template>
+    <script type="module">
+      import { meowsonry, autoUpdate } from "../../../src";
+      import { gap } from "../../../src/middleware";
+      import simpleSvgPlaceholder from "@cloudfour/simple-svg-placeholder";
+
+      const container = document.querySelector(".container");
+      const cardTemplate = document.querySelector("#cardTemplate");
+
+      const images = [
+        { width: 235, height: 300, bgColor: "#7D4F50", textColor: "#F9EAE1" },
+        { width: 240, height: 320, bgColor: "#4B5267", textColor: "#EFBCD5" },
+        { width: 250, height: 310, bgColor: "#283845", textColor: "#F2D492" },
+        { width: 220, height: 290, bgColor: "#E63946", textColor: "#F1FAEE" },
+        { width: 260, height: 330, bgColor: "#A8DADC", textColor: "#1D3557" },
+        { width: 230, height: 305, bgColor: "#457B9D", textColor: "#F1FAEE" },
+        { width: 245, height: 315, bgColor: "#1D3557", textColor: "#E63946" },
+        { width: 255, height: 325, bgColor: "#F4A261", textColor: "#264653" },
+        { width: 225, height: 295, bgColor: "#2A9D8F", textColor: "#E9C46A" },
+        { width: 265, height: 335, bgColor: "#E76F51", textColor: "#264653" },
+        { width: 238, height: 308, bgColor: "#264653", textColor: "#E9C46A" },
+        { width: 242, height: 312, bgColor: "#606C38", textColor: "#FEFAE0" },
+        { width: 252, height: 322, bgColor: "#283618", textColor: "#DDA15E" },
+        { width: 228, height: 298, bgColor: "#BC6C25", textColor: "#FEFAE0" },
+        { width: 258, height: 328, bgColor: "#DDA15E", textColor: "#283618" },
+        { width: 232, height: 302, bgColor: "#3D405B", textColor: "#E07A5F" },
+        { width: 248, height: 318, bgColor: "#81B29A", textColor: "#3D405B" },
+        { width: 262, height: 332, bgColor: "#F2CC8F", textColor: "#3D405B" },
+        { width: 222, height: 292, bgColor: "#E07A5F", textColor: "#F4F1DE" },
+        { width: 268, height: 338, bgColor: "#F4F1DE", textColor: "#3D405B" },
+        { width: 236, height: 306, bgColor: "#540B0E", textColor: "#9E2A2B" },
+        { width: 244, height: 314, bgColor: "#9E2A2B", textColor: "#E5989B" },
+        { width: 254, height: 324, bgColor: "#E5989B", textColor: "#B5838D" },
+        { width: 224, height: 294, bgColor: "#B5838D", textColor: "#6D6875" },
+        { width: 264, height: 334, bgColor: "#6D6875", textColor: "#E5989B" },
+        { width: 234, height: 304, bgColor: "#FF9F1C", textColor: "#2EC4B6" },
+        { width: 246, height: 316, bgColor: "#2EC4B6", textColor: "#CBF3F0" },
+        { width: 256, height: 326, bgColor: "#CBF3F0", textColor: "#FFBF69" },
+        { width: 226, height: 296, bgColor: "#FFFFFF", textColor: "#2B2D42" },
+        { width: 266, height: 336, bgColor: "#2B2D42", textColor: "#8D99AE" },
+        { width: 237, height: 307, bgColor: "#8D99AE", textColor: "#EDF2F4" },
+        { width: 243, height: 313, bgColor: "#EDF2F4", textColor: "#EF233C" },
+        { width: 253, height: 323, bgColor: "#D90429", textColor: "#EDF2F4" },
+        { width: 223, height: 293, bgColor: "#8AC926", textColor: "#1982C4" },
+        { width: 263, height: 333, bgColor: "#1982C4", textColor: "#6A994E" },
+        { width: 233, height: 303, bgColor: "#6A994E", textColor: "#F77F00" },
+        { width: 247, height: 317, bgColor: "#F77F00", textColor: "#FCBF49" },
+        { width: 257, height: 327, bgColor: "#FCBF49", textColor: "#EAE2B7" },
+        { width: 227, height: 297, bgColor: "#003049", textColor: "#D62828" },
+        { width: 267, height: 337, bgColor: "#D62828", textColor: "#F77F00" },
+        { width: 239, height: 309, bgColor: "#F77F00", textColor: "#FCBF49" },
+        { width: 241, height: 311, bgColor: "#FCBF49", textColor: "#EAE2B7" },
+        { width: 251, height: 321, bgColor: "#354F52", textColor: "#52796F" },
+        { width: 221, height: 291, bgColor: "#52796F", textColor: "#84A98C" },
+        { width: 261, height: 331, bgColor: "#84A98C", textColor: "#CAD2C5" },
+        { width: 231, height: 301, bgColor: "#CAD2C5", textColor: "#354F52" },
+        { width: 249, height: 319, bgColor: "#14213D", textColor: "#FCA311" },
+        { width: 259, height: 329, bgColor: "#FCA311", textColor: "#E5E5E5" },
+        { width: 229, height: 299, bgColor: "#000000", textColor: "#FFFFFF" },
+        { width: 269, height: 339, bgColor: "#FCA311", textColor: "#000000" },
+      ];
+
+      for (const image of images) {
+        const cardElement = cardTemplate.content.cloneNode(true);
+        const cardImage = cardElement.querySelector(".card__image");
+        cardImage.src = simpleSvgPlaceholder(image);
+        container.appendChild(cardElement);
+      }
+
+      autoUpdate(container, () =>
+        meowsonry({
+          container: container,
+          middleware: [gap(8)],
+        }),
+      );
+    </script>
+  </body>
+</html>
