@@ -7,16 +7,20 @@
   "type": "module",
   "scripts": {
     "test": "vitest",
-    "test.playwright": "playwright test",
+    "test.playwright": "npx playwright test --grep-invert @bundle",
+    "test.playwright.update": "playwright test --grep-invert @bundle --update-snapshots",
+    "test.playwright.bundle": "npx playwright test --grep @bundle",
+    "test.playwright.bundle.update": "npx playwright test --grep @bundle --update-snapshots",
     "test.playwright.ui": "playwright test --ui",
-    "test.playwright.update": "playwright test --update-snapshots",
     "test.server": "vite --config tests/e2e/vite/vite.config.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext ts",
-    "lint.fix": "eslint src --ext ts --fix"
+    "lint.fix": "eslint src --ext ts --fix",
+    "build": "vite build"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./dist/meowsonry-layout.iife.js": "./dist/my-lib.iife.min.js"
   },
   "devDependencies": {
     "@cloudfour/simple-svg-placeholder": "^1.1.0",
@@ -32,6 +36,7 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.1",
     "vite": "^7.3.1",
+    "vite-plugin-static-copy": "^3.2.0",
     "vitest": "^4.0.18"
   }
 }

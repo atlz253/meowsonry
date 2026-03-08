@@ -2,6 +2,8 @@
 
 A lightweight, extensible masonry layout library for modern web applications. Built with TypeScript and inspired by middleware architecture patterns.
 
+<img src="./tests/e2e/snapshots/bundle.spec.ts-snapshots/-bundle-browser-bundle-should-work-1-chromium-win32.png" alt="Layout demo" height="300" />
+
 ## Features
 
 - ✅ **Intelligent row-based positioning** - Optimizes vertical space across columns
@@ -215,3 +217,5 @@ See [AGENTS.md](AGENTS.md) for agents guidelines including:
 ## License
 
 MIT - See [LICENSE](LICENSE) for details.
+
+Meow :3

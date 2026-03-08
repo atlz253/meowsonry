@@ -8,6 +8,7 @@ import { endCurrentChildPlacement } from "./middleware/endCurrentChildPlacement"
 import { PlacedChildren } from "./PlacedChildren";
 
 export { autoUpdate } from "./autoUpdate";
+export * from "./middleware";
 
 /**
  * Arranges elements inside a container according to masonry layout rules
@@ -108,5 +109,3 @@ export function meowsonry({
     height: `${placedChildren.height}px`,
   });
 }
-
-export default meowsonry;
