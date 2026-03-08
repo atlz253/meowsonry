@@ -8,10 +8,11 @@ import type {
 
 describe("handleMiddleware", () => {
   test("should return initial context if middleware array is empty", () => {
-    const container = {} as HTMLElement;
     const initialContext: BeforePlacementMiddlewareContext = {
-      container,
-      containerWidth: 100,
+      container: {
+        element: {} as HTMLElement,
+        width: 100,
+      },
     };
 
     const result = handleMiddleware({
@@ -23,10 +24,11 @@ describe("handleMiddleware", () => {
   });
 
   test("should allow middleware to modify context using setContext", () => {
-    const container = {} as HTMLElement;
     const initialContext: BeforePlacementMiddlewareContext = {
-      container,
-      containerWidth: 100,
+      container: {
+        element: {} as HTMLElement,
+        width: 100,
+      },
     };
 
     const result = handleMiddleware({
@@ -34,21 +36,27 @@ describe("handleMiddleware", () => {
         {
           type: MIDDLEWARE_TYPE.beforePlacement,
           callback: ({ setContext }) => {
-            setContext({ container, containerWidth: 200 });
+            setContext({
+              container: {
+                element: {} as HTMLElement,
+                width: 200,
+              },
+            });
           },
         },
       ],
       initialContext,
     });
 
-    expect(result.containerWidth).toBe(200);
+    expect(result.container.width).toBe(200);
   });
 
   test("should allow middleware to modify context using function setter", () => {
-    const container = {} as HTMLElement;
     const initialContext: BeforePlacementMiddlewareContext = {
-      container,
-      containerWidth: 100,
+      container: {
+        element: {} as HTMLElement,
+        width: 100,
+      },
     };
 
     const result = handleMiddleware({
@@ -58,7 +66,10 @@ describe("handleMiddleware", () => {
           callback: ({ setContext }) => {
             setContext((prev) => ({
               ...prev,
-              containerWidth: (prev.containerWidth ?? 0) + 50,
+              container: {
+                ...prev.container,
+                width: (prev.container.width ?? 0) + 50,
+              },
             }));
           },
         },
@@ -66,14 +77,16 @@ describe("handleMiddleware", () => {
       initialContext,
     });
 
-    expect(result.containerWidth).toBe(150);
+    expect(result.container.width).toBe(150);
   });
 
   test("should apply middleware in order", () => {
-    const container = {} as HTMLElement;
+    const containerElement = {} as HTMLElement;
     const initialContext: BeforePlacementMiddlewareContext = {
-      container,
-      containerWidth: 100,
+      container: {
+        element: containerElement,
+        width: 100,
+      },
     };
 
     const result = handleMiddleware({
@@ -81,27 +94,38 @@ describe("handleMiddleware", () => {
         {
           type: MIDDLEWARE_TYPE.beforePlacement,
           callback: ({ setContext }) => {
-            setContext({ container, containerWidth: 150 });
+            setContext({
+              container: {
+                element: containerElement,
+                width: 150,
+              },
+            });
           },
         },
         {
           type: MIDDLEWARE_TYPE.beforePlacement,
           callback: ({ setContext }) => {
-            setContext({ container, containerWidth: 200 });
+            setContext({
+              container: {
+                element: containerElement,
+                width: 200,
+              },
+            });
           },
         },
       ],
       initialContext,
     });
 
-    expect(result.containerWidth).toBe(200);
+    expect(result.container.width).toBe(200);
   });
 
   test("should return same context object if no modifications", () => {
-    const container = {} as HTMLElement;
     const initialContext: BeforePlacementMiddlewareContext = {
-      container,
-      containerWidth: 100,
+      container: {
+        element: {} as HTMLElement,
+        width: 100,
+      },
     };
 
     const result = handleMiddleware({
@@ -113,14 +137,17 @@ describe("handleMiddleware", () => {
   });
 
   test("should allow placement middleware to modify context", () => {
-    const container = {} as HTMLElement;
     const childrenElements: HTMLElement[] = [];
     const currentChildElement = {} as HTMLElement;
 
     const initialContext: PlacementMiddlewareContext = {
       gap: 0,
-      container,
-      containerWidth: 100,
+      container: {
+        element: {} as HTMLElement,
+        width: 100,
+        paddingTop: 0,
+        paddingLeft: 0,
+      },
       placedChildren: null as never,
       childrenElements,
       currentChildElement,
@@ -132,13 +159,16 @@ describe("handleMiddleware", () => {
         {
           type: MIDDLEWARE_TYPE.placement,
           callback: ({ setContext }) => {
-            setContext({ ...initialContext, containerWidth: 300 });
+            setContext({
+              ...initialContext,
+              container: { ...initialContext.container, width: 300 },
+            });
           },
         },
       ],
       initialContext,
     });
 
-    expect(result.containerWidth).toBe(300);
+    expect(result.container.width).toBe(300);
   });
 });
