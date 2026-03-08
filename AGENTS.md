@@ -4,13 +4,16 @@
 
 ```bash
 npm test                    # Run unit tests with vitest
-npm run test.playwright     # Run e2e tests with Playwright
+npm run test.playwright     # Run e2e tests with Playwright (excludes @bundle tests)
 npm run test.playwright.ui  # Run e2e tests in UI mode
 npm run test.playwright.update  # Update screenshot snapshots
+npm run test.playwright.bundle  # Run only @bundle e2e tests
+npm run test.playwright.bundle.update  # Update bundle test snapshots
 npm run test.server         # Start Vite dev server for e2e tests
 npm run typecheck           # Verify no type errors (run after task completion)
 npm run lint                # Verify no ESLint errors (run after task completion)
 npm run lint.fix            # Auto-fix ESLint errors
+npm run build               # Build library with Vite
 ```
 
 Run a single unit test:
@@ -45,7 +48,7 @@ See [CODESTYLE.md](CODESTYLE.md) for detailed documentation guidelines including
 - Export types from `src/types.ts`
 - Use readonly arrays with private fields (`#placed: PlacedChild[] = []`) for encapsulation
 - Prefer `const` over `let`, use `readonly` where appropriate
-- Enable strict mode: `exactOptionalPropertyTypes`, `strict`, `isolatedModules`
+- Enable strict mode in tsconfig.json: `strict`, `isolatedModules`
 
 ### Testing
 
@@ -54,6 +57,7 @@ See [CODESTYLE.md](CODESTYLE.md) for detailed documentation guidelines including
 - Use Playwright for e2e screenshot testing: `import { test, expect } from "@playwright/test"`
 - Mock test data in `tests/unit/mocks/` using `#placed` pattern
 - Snapshot directory: `./tests/e2e/snapshots`
+- Bundle tests are marked with `@bundle` tag and run separately
 
 ### Naming Conventions
 
@@ -133,3 +137,13 @@ npm run typecheck
 If ESLint reports errors, fix them manually or use `npm run lint.fix` for auto-fixable issues.
 
 **Note:** The project uses flat ESLint config (`eslint.config.ts`) with TypeScript support and Prettier integration via `eslint-plugin-prettier`. Type-checking is enabled in `tsconfig.json` with strict mode.
+
+## Cursor / Copilot Rules
+
+The following rules apply to AI coding assistants working in this repository:
+
+- **Always run linting after changes**: Execute `npm run lint` or `npm run lint.fix` before completing tasks
+- **Always verify types**: Run `npm run typecheck` after modifying code
+- **Use existing patterns**: Match the naming conventions, formatting style, and architecture of existing files
+- **Document with JSDoc**: Add proper documentation comments for all non-trivial functions
+- **Test thoroughly**: Write unit tests for new functionality using Vitest

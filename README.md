@@ -22,7 +22,7 @@ npm install meowsonry-layout
 ## Basic Usage
 
 ```typescript
-import meowsonry from "meowsonry-layout";
+import { meowsonry } from "meowsonry-layout";
 
 const container = document.querySelector(".masonry") as HTMLElement;
 
@@ -58,7 +58,7 @@ meowsonry({
 ### With Gap Spacing
 
 ```typescript
-import meowsonry, { gap } from "meowsonry-layout";
+import { meowsonry, gap } from "meowsonry-layout";
 
 const container = document.querySelector(".masonry") as HTMLElement;
 
@@ -71,7 +71,7 @@ meowsonry({
 ### With Auto-Update
 
 ```typescript
-import meowsonry, { autoUpdate } from "meowsonry-layout";
+import { meowsonry, autoUpdate } from "meowsonry-layout";
 
 const container = document.querySelector(".masonry") as HTMLElement;
 
