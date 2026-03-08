@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { baseRowPlacement } from "../../../src/middleware/baseRowPlacement";
+import { rowPlacement } from "../../../src/middleware/rowPlacement";
 import { PlacedChildren } from "../../../src/PlacedChildren";
 import { PlacementMiddlewareContext } from "../../../src/middleware";
 
@@ -13,7 +13,7 @@ describe("baseRowPlacement", () => {
     const placedChildren = new PlacedChildren();
     let capturedContext = {} as PlacementMiddlewareContext;
 
-    baseRowPlacement().callback({
+    rowPlacement().callback({
       context: {
         gap: 0,
         container: {
@@ -59,7 +59,7 @@ describe("baseRowPlacement", () => {
     ]);
     let capturedContext = {} as PlacementMiddlewareContext;
 
-    baseRowPlacement().callback({
+    rowPlacement().callback({
       context: {
         gap: 0,
         container: {
@@ -105,7 +105,7 @@ describe("baseRowPlacement", () => {
     ]);
     let capturedContext = {} as PlacementMiddlewareContext;
 
-    baseRowPlacement().callback({
+    rowPlacement().callback({
       context: {
         gap: 0,
         container: {
@@ -159,7 +159,7 @@ describe("baseRowPlacement", () => {
     ]);
     let capturedContext = {} as PlacementMiddlewareContext;
 
-    baseRowPlacement().callback({
+    rowPlacement().callback({
       context: {
         gap: 0,
         container: {
@@ -206,7 +206,7 @@ describe("baseRowPlacement", () => {
     ]);
     let capturedContext = {} as PlacementMiddlewareContext;
 
-    baseRowPlacement().callback({
+    rowPlacement().callback({
       context: {
         gap: 0,
         container: {
@@ -276,7 +276,7 @@ describe("baseRowPlacement", () => {
     ]);
     let capturedContext = {} as PlacementMiddlewareContext;
 
-    baseRowPlacement().callback({
+    rowPlacement().callback({
       context: {
         gap: 0,
         container: {
@@ -386,7 +386,7 @@ describe("baseRowPlacement", () => {
     ]);
     let capturedContext = {} as PlacementMiddlewareContext;
 
-    baseRowPlacement().callback({
+    rowPlacement().callback({
       context: {
         gap: 8,
         container: {
@@ -503,7 +503,7 @@ describe("baseRowPlacement", () => {
     ]);
     let capturedContext = {} as PlacementMiddlewareContext;
 
-    baseRowPlacement().callback({
+    rowPlacement().callback({
       context: {
         gap: 8,
         container: {

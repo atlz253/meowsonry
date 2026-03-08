@@ -31,7 +31,7 @@ Meowsonry uses a **middleware pipeline architecture** to implement its masonry l
 - **handleMiddleware**: Pipeline executor
 - **position**: CSS position setter
 - **containerClientWidth**: Width measurement
-- **baseRowPlacement**: Layout algorithm
+- **rowPlacement**: Layout algorithm
 - **assignAbsolutePositioningPropertiesToCurrentChild**: DOM styling
 - **pushCurrentChildToPlacedChildren**: Result tracking
 

@@ -1,5 +1,5 @@
 import { Middleware } from "./middleware";
-import { baseRowPlacement } from "./middleware/baseRowPlacement";
+import { rowPlacement } from "./middleware/rowPlacement";
 import { MIDDLEWARE_TYPE } from "./middleware/constants";
 import { containerProperties } from "./middleware/containerProperties";
 import { handleMiddleware } from "./middleware/handleMiddleware";
@@ -47,7 +47,7 @@ export function meowsonry({
         currentChildElement.style.position = value;
       },
     }),
-    baseRowPlacement(),
+    rowPlacement(),
     ...middleware.filter(
       (m) =>
         m.type === MIDDLEWARE_TYPE.placement ||

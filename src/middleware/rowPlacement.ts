@@ -1,6 +1,6 @@
 import { PlacementMiddleware } from "./types";
 
-export const baseRowPlacement = (): PlacementMiddleware => ({
+export const rowPlacement = (): PlacementMiddleware => ({
   type: "placement",
   callback: ({
     context: {
