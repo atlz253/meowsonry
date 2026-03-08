@@ -144,3 +144,42 @@ Enable strict mode in `tsconfig.json`:
 - Throw descriptive errors for invalid arguments
 - Return empty arrays `[]` for edge cases instead of undefined
 - Use TypeScript's `at()` method for safe array access
+
+---
+
+## Commit Message Conventions
+
+All commits must follow the [Conventional Commits](https://www.conventionalcommits.org/) format:
+
+```
+<type>(<scope>): <subject>
+```
+
+For this project, use only these types:
+
+- `feat` - new feature
+- `fix` - bug fix
+- `chore` - maintenance tasks, dependency updates
+- `docs` - documentation changes
+- `test` - test additions/changes
+- `refactor` - code restructuring without behavior change
+
+**Rules:**
+
+- Subject line must be in imperative mood (e.g., "add", not "added" or "adds")
+- Maximum 72 characters for subject line
+- No capitalization after type (lowercase)
+- No trailing period
+- Use `refactor` for code improvements without functionality changes
+- Use `chore` for build/config/tasks that don't affect runtime
+
+**Examples:**
+
+```
+feat: add row-aware child placement tracking
+fix: correct calculation of container width
+test: add unit tests for PlacedChildren class
+docs: update architecture overview
+refactor: extract numeric range validation
+chore: update dependencies to latest versions
+```
