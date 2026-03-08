@@ -9,6 +9,35 @@ import { PlacedChildren } from "./PlacedChildren";
 
 export { autoUpdate } from "./autoUpdate";
 
+/**
+ * Arranges elements inside a container according to masonry layout rules
+ *
+ * @param options - Configuration object
+ * @param options.container - The container HTML element to apply masonry layout
+ * @param options.middleware - Array of middleware functions to customize placement behavior
+ *
+ * @example
+ * // Basic usage with default settings
+ * import meowsonry from 'meowsonry';
+ * const container = document.querySelector('.masonry');
+ * meowsonry({ container });
+ *
+ * @example
+ * // With custom middleware
+ * import meowsonry, { Middleware } from 'meowsonry';
+ * const container = document.querySelector('.masonry');
+ * const customMiddleware: Middleware[] = [
+ *   // Your custom middleware here
+ * ];
+ * meowsonry({ container, middleware: customMiddleware });
+ *
+ * @example
+ * // Using with autoUpdate
+ * import { meowsonry, autoUpdate } from 'meowsonry';
+ * const container = document.querySelector('.masonry');
+ * const instance = meowsonry({ container });
+ * autoUpdate(container, instance);
+ */
 export function meowsonry({
   container: containerElement,
   middleware = [],
