@@ -4,7 +4,7 @@
 
 A lightweight, extensible masonry layout library for modern web applications. Built with TypeScript and inspired by middleware architecture patterns.
 
-<img src="./tests/e2e/snapshots/bundle.spec.ts-snapshots/-bundle-browser-bundle-should-work-1-chromium-win32.png" alt="Layout demo" height="300" />
+<img src="https://raw.githubusercontent.com/atlz253/meowsonry/c9c31d10c2f1e1bbd741e98a64de3dcbb7cdfbc5/tests/e2e/snapshots/bundle.spec.ts-snapshots/-bundle-browser-bundle-should-work-1-chromium-win32.png" alt="Layout demo" height="300" />
 
 ## Features
 
