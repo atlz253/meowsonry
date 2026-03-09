@@ -1,5 +1,7 @@
 # Meowsonry
 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![npm version](https://img.shields.io/npm/v/meowsonry-layout.svg?style=flat)](https://www.npmjs.com/package/meowsonry-layout)
+
 A lightweight, extensible masonry layout library for modern web applications. Built with TypeScript and inspired by middleware architecture patterns.
 
 <img src="./tests/e2e/snapshots/bundle.spec.ts-snapshots/-bundle-browser-bundle-should-work-1-chromium-win32.png" alt="Layout demo" height="300" />
