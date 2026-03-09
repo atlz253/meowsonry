@@ -16,7 +16,9 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext ts",
     "lint.fix": "eslint src --ext ts --fix",
-    "build": "vite build"
+    "build": "vite build",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test"
   },
   "exports": {
     ".": "./src/index.ts",
