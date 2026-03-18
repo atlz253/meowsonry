@@ -36,6 +36,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": "https://github.com/atlz253/meowsonry",
   "devDependencies": {
     "@cloudfour/simple-svg-placeholder": "^1.1.0",
     "@eslint/js": "^10.0.1",
