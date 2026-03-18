@@ -36,5 +36,7 @@ describe("NumericRange", () => {
     expect(new NumericRange(5, 30).contains(5, 20)).toBe(true);
     expect(new NumericRange(2, 4).contains(5, 20)).toBe(false);
     expect(new NumericRange(25, 30).contains(5, 20)).toBe(false);
+
+    expect(new NumericRange(0, 10).contains(0, 0)).toBe(true);
   });
 });

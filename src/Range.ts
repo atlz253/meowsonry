@@ -18,7 +18,7 @@ export class NumericRange {
         (this.from <= range.from && this.to >= range.from) ||
         (range.from <= this.from && range.to >= this.to)
       );
-    } else if (to) {
+    } else if (typeof to === "number") {
       return this.contains(new NumericRange(rangeOrFrom, to));
     } else {
       throw new Error("incorrect arguments");
