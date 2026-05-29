@@ -57,6 +57,24 @@ describe("preventFlick", () => {
     expect(container.style.visibility).toBe("visible");
   });
 
+  test("should clear previous hidden visibility from container", async () => {
+    const container = new FakeElement() as unknown as HTMLElement;
+    const middleware = [preventFlick()];
+
+    container.style.visibility = "hidden";
+
+    handleMiddleware({
+      middleware,
+      initialContext: createBeforePlacementContext(container),
+    });
+
+    expect(container.style.visibility).toBe("hidden");
+
+    await Promise.resolve();
+
+    expect(container.style.visibility).toBe("");
+  });
+
   test("should set initial render attribute and index on first layout", () => {
     const container = new FakeElement() as unknown as HTMLElement;
     const firstChild = new FakeElement() as unknown as HTMLElement;

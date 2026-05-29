@@ -4,7 +4,9 @@ test("preventFlick should expose animation hooks", async ({ page }) => {
   await page.goto("http://localhost:3000/prevent-flick-animation-should-work");
 
   const items = page.locator(".container > div");
+  const container = page.locator(".container");
 
+  await expect(container).toHaveCSS("visibility", "visible");
   await expect(items).toHaveCount(4);
   await expect(items.nth(0)).toHaveAttribute(
     "data-meowsonry-prevent-flick",

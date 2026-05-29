@@ -103,8 +103,8 @@ autoUpdate(container, () => {
 ```
 
 The `preventFlick()` middleware hides the container before the first layout is
-applied, restores its visibility after layout, and adds animation hooks to each
-item:
+applied, reveals it after layout if it was initially hidden, and adds animation
+hooks to each item:
 
 ```css
 [data-meowsonry-prevent-flick] {

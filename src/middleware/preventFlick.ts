@@ -42,12 +42,21 @@ export const preventFlick = (): CommonMiddleware => ({
     }
 
     const previousVisibility = containerElement.style.visibility;
+    const wasHiddenByCss =
+      previousVisibility !== "hidden" &&
+      typeof getComputedStyle === "function" &&
+      getComputedStyle(containerElement).visibility === "hidden";
 
     pendingContainers.add(containerElement);
     containerElement.style.visibility = "hidden";
 
     queueMicrotask(() => {
-      containerElement.style.visibility = previousVisibility;
+      containerElement.style.visibility =
+        previousVisibility === "hidden"
+          ? ""
+          : wasHiddenByCss
+            ? "visible"
+            : previousVisibility;
       pendingContainers.delete(containerElement);
       initializedContainers.add(containerElement);
     });
