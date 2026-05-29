@@ -14,6 +14,7 @@ A lightweight, extensible masonry layout library for modern web applications. Bu
 - ✅ **Type-safe** - Fully typed with strict TypeScript
 - ✅ **Zero dependencies** - Pure JavaScript/TypeScript implementation
 - ✅ **Auto-update support** - Built-in ResizeObserver integration
+- ✅ **First render flick prevention** - Optional middleware for hiding unpositioned items and adding CSS animation hooks
 
 ## Installation
 
@@ -77,16 +78,51 @@ import { meowsonry, autoUpdate } from "meowsonry-layout";
 
 const container = document.querySelector(".masonry") as HTMLElement;
 
-// Initialize layout
-meowsonry({ container });
-
-// Automatically update on resize
+// Initialize layout and automatically update on resize
 const cleanup = autoUpdate(container, () => {
   meowsonry({ container });
 });
 
 // Cleanup when no longer needed
 cleanup();
+```
+
+### Prevent First Render Flick
+
+```typescript
+import { meowsonry, autoUpdate, gap, preventFlick } from "meowsonry-layout";
+
+const container = document.querySelector(".masonry") as HTMLElement;
+
+autoUpdate(container, () => {
+  meowsonry({
+    container,
+    middleware: [preventFlick(), gap(16)],
+  });
+});
+```
+
+The `preventFlick()` middleware hides the container before the first layout is
+applied, restores its visibility after layout, and adds animation hooks to each
+item:
+
+```css
+[data-meowsonry-prevent-flick] {
+  animation: meowsonry-fade-in 220ms ease both;
+  animation-delay: calc(var(--meowsonry-index) * 24ms);
+}
+
+@keyframes meowsonry-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 ```
 
 ## Middleware System
@@ -145,6 +181,15 @@ Sets up automatic updates using ResizeObserver.
 
 ```typescript
 function autoUpdate(container: HTMLElement, updateFn: () => void): () => void; // cleanup function
+```
+
+### `preventFlick()`
+
+Creates middleware that prevents first-render flicker and adds CSS hooks for
+custom appearance animations.
+
+```typescript
+function preventFlick(): Middleware;
 ```
 
 ### `gap(value)`

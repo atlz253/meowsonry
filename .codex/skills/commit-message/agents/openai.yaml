@@ -1,0 +1,4 @@
+interface:
+  display_name: "Commit Message"
+  short_description: "Generate commit messages from repo rules."
+  default_prompt: "Use $commit-message to generate a git commit message for the current changes."

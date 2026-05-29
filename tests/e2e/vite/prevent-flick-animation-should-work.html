@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>preventFlick animation demo</title>
+    <style>
+      .container {
+        width: 320px;
+      }
+
+      .container > div {
+        width: 100px;
+        height: 100px;
+      }
+
+      [data-meowsonry-prevent-flick] {
+        animation: meowsonry-fade-in 220ms ease both;
+        animation-delay: calc(var(--meowsonry-index) * 24ms);
+      }
+
+      @keyframes meowsonry-fade-in {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div style="background-color: red"></div>
+      <div style="background-color: green"></div>
+      <div style="background-color: blue"></div>
+      <div style="background-color: purple"></div>
+    </div>
+    <script type="module">
+      import { gap, meowsonry, preventFlick } from "../../../src";
+
+      meowsonry({
+        container: document.querySelector(".container"),
+        middleware: [preventFlick(), gap(8)],
+      });
+    </script>
+  </body>
+</html>
